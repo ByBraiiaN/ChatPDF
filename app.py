@@ -13,9 +13,16 @@ working_dir = os.path.dirname(os.path.abspath(__file__))
 
 
 def load_document(file_path):
-    loader = UnstructuredPDFLoader(file_path)
-    documents = loader.load()
-    return documents
+    try:
+        # Abre el PDF con PyMuPDF (fitz)
+        with fitz.open(file_path) as pdf:
+            text = ""
+            for page in pdf:
+                text += page.get_text()  # Extrae el texto de cada página
+        return [{"text": text}]  # Retorna en formato compatible con LangChain
+    except Exception as e:
+        st.error(f"Error cargando el archivo PDF: {e}")
+        return []
 
 
 def setup_vectorstore(documents):
