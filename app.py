@@ -1,5 +1,6 @@
 import os
 import streamlit as st
+import fitz  # PyMuPDF
 from langchain_community.document_loaders import UnstructuredPDFLoader
 from langchain_text_splitters.character import CharacterTextSplitter
 from langchain_community.vectorstores import FAISS
